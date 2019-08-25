@@ -11,7 +11,7 @@ const app = express()
 
 app.use(bodyParser.json())
 
-router.get('/', (req, res) => {
+app.get('/', (req, res) => {
         return res.send('Welcome to Mamiclone API, there are /api/v1/users and /api/v1/dorms resources to try')
     })
 
