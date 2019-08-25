@@ -33,5 +33,5 @@ app.group('/api/v1', (router) => {
 })
 
 app.listen(process.env.PORT, () => {
-    console.log(`Listening to port ${PORT}`)
+    console.log(`Listening...`)
 })
