@@ -10,7 +10,14 @@ const dormController = require('./controllers/dorm')
 const app = express()
 
 app.use(bodyParser.json())
+
+router.get('/', (req, res) => {
+        return res.send('Welcome to Mamiclone API, there are /api/v1/users and /api/v1/dorms resources to try')
+    })
+
 app.group('/api/v1', (router) => {
+
+    
     
     //Auth API
     router.post('/login', authController.login)
