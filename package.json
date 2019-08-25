@@ -1,0 +1,32 @@
+{
+  "name": "mamiclone-api",
+  "version": "1.0.0",
+  "description": "API for bootcamp project cloning mamikos mobile app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eryzerz/mamiclone-api.git"
+  },
+  "author": "Eryz Riansyah",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/eryzerz/mamiclone-api/issues"
+  },
+  "homepage": "https://github.com/eryzerz/mamiclone-api#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "express-group-routes": "^1.1.0",
+    "express-jwt": "^5.3.1",
+    "jsonwebtoken": "^8.5.1",
+    "mysql": "^2.17.1",
+    "mysql2": "^1.6.5",
+    "nodemon": "^1.19.1",
+    "pg": "^7.12.1",
+    "sequelize": "^5.16.0",
+    "sequelize-cli": "^5.5.0"
+  }
+}
