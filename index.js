@@ -7,8 +7,6 @@ const authController = require('./controllers/auth')
 const userController = require('./controllers/user')
 const dormController = require('./controllers/dorm')
 
-const PORT = 3000
-
 const app = express()
 
 app.use(bodyParser.json())
@@ -34,6 +32,6 @@ app.group('/api/v1', (router) => {
 
 })
 
-app.listen(PORT, () => {
+app.listen(process.env.PORT, () => {
     console.log(`Listening to port ${PORT}`)
 })
