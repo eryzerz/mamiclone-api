@@ -44,7 +44,6 @@ exports.listByCity = (req, res) => {
 }
 
 exports.create = (req, res) => {
-    console.log(req.user.id)
     Object.assign(req.body, {createdBy: req.user.id})
     Dorm.create(req.body)
         .then(dorm => res.status(201).send(dorm))
