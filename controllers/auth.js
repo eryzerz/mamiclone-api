@@ -29,15 +29,14 @@ exports.login = (req, res) => {
 
 exports.signup = (req, res) => {
     const { email, username } = req.body
-    const data = req.body
 
-    User.findOrCreate({where: {[Op.or]:[{email}, {username}]}, data})
+    User.findOrCreate({where: {[Op.or]:[{email}, {username}]}})
         .then((user, created) => {
             if (created) {
                 const token = jwt.sign({ id: user.id}, 'tautochrone', {expiresIn: "3 hours"})
                 let { id, username, email, createdAt } = user
                 res.status(201).send({ id, username, email, createdAt, token})
-            } else {
+            } else { 
                 res.status(409).send({
                     message: 'Email/Username already exist!'
                 })
