@@ -1,6 +1,9 @@
 const jwt = require('jsonwebtoken')
+const Sequelize = require('sequelize')
 
 const User = require('../models').user
+
+const Op = Sequelize.Op
 
 exports.login = (req, res) => {
     const { email, password } = req.body
@@ -27,18 +30,17 @@ exports.login = (req, res) => {
 exports.signup = (req, res) => {
     const { email, username } = req.body
 
-    if ( email === User.findOne({where: {email}}).then(user => user.email) || username === User.findOne({where: {username}}).then(user => user.username)) {
-        res.send({
-            message: 'Email/Username already exist'
+    User.findOrCreate({where: {[Op.or]:[{email}, {username}]}}, req.body)
+        .then(([user, created]) => {
+            if (!created) {
+                res.status(409).send({
+                    message: 'Email/Username already exist!'
+                })
+            } else {
+                const token = jwt.sign({ id: user.id}, 'tautochrone', {expiresIn: "3 hours"})
+                let { id, username, email, createdAt } = user
+                res.status(201).send({ id, username, email, createdAt, token})
+            }
+            
         })
-    } else {
-        User.create(req.body)
-        .then(user => {
-            const token = jwt.sign({ id: user.id}, 'tautochrone', {expiresIn: "3 hours"})
-            let { id, username, email, createdAt } = user
-            res.send({ id, username, email, createdAt, token})
-        })
-    }
-
-    
 }
