@@ -51,9 +51,10 @@ exports.delete = (req, res) => {
                 })
             }
             return user.destroy()
-                .then(() => res.status(204).send({
+                .then(() => {
+                    return res.status(204).send({
                     message: `User with id ${req.params.id} has been deleted`
-                }))
+                })})
                 .catch(error => res.status(400).send(error))
         })
         .catch(error => res.status(400).send(error))
