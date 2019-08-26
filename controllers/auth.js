@@ -23,6 +23,7 @@ exports.login = (req, res) => {
                 })
             }
         })
+        .catch((err) => res.status(400).send(err))
 }
 
 
@@ -32,7 +33,7 @@ exports.signup = (req, res) => {
     User.findOne({ where: {[Op.or]:[{email}, {username}]}})
         .then(user => {
             if(user) {
-                res.send({
+                res.status(400).send({
                     message: 'Email/Username already exist'
                 })
             } else {
@@ -40,10 +41,12 @@ exports.signup = (req, res) => {
                     .then(user => {
                         const token = jwt.sign({ id: user.id}, 'tautochrone', {expiresIn: "3 hours"})
                         let { id, username, email, createdAt } = user
-                        res.send({ id, username, email, createdAt, token})
+                        res.status(200).send({ id, username, email, createdAt, token})
                     })
+                    .catch((err) => res.status(400).send(err))
             }
         })
+        .catch((err) => res.status(400).send(err))
 
     
 }
