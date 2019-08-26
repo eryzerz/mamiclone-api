@@ -29,9 +29,10 @@ exports.login = (req, res) => {
 
 exports.signup = (req, res) => {
     const { email, username } = req.body
+    const data = req.body
 
-    User.findOrCreate({where: {[Op.or]:[{email}, {username}]}}, req.body)
-        .then(([user, created]) => {
+    User.findOrCreate({where: {[Op.or]:[{email}, {username}]}, data})
+        .then((user, created) => {
             if (!created) {
                 res.status(409).send({
                     message: 'Email/Username already exist!'
