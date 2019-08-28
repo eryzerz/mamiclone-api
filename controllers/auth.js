@@ -20,7 +20,7 @@ exports.login = (req, res) => {
         return
     }
 
-    User.findOne({ where: {email, password}})
+    User.findOne({ where: {email}})
         .then(async user => {
             if(user) {
                 const token = jwt.sign({ id: user.id}, 'tautochrone', {expiresIn: 3600})
