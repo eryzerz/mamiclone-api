@@ -72,9 +72,8 @@ exports.signup = (req, res) => {
                 })
             } else {
                 const hashed = await hashedPassword()
-                console.log(hashed)
 
-                User.create(Object.assign(req.body, {password: hashedPassword()}))
+                User.create(Object.assign(req.body, {password: hashed}))
                     .then(user => {
                         const token = jwt.sign({ id: user.id}, 'tautochrone', {expiresIn: 3600})
                         res.status(200).send({ user, token})
