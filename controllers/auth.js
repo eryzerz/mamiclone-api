@@ -71,7 +71,7 @@ exports.signup = (req, res) => {
                     message: 'Email/Username already exist'
                 })
             } else {
-                User.create(Object.assign(req.body, {password: hashedPassword().then((result)=> {return result})}))
+                User.create(Object.assign(req.body, {password: hashedPassword()}))
                     .then(user => {
                         const token = jwt.sign({ id: user.id}, 'tautochrone', {expiresIn: 3600})
                         res.status(200).send({ user, token})
