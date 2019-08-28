@@ -20,9 +20,9 @@ exports.login = (req, res) => {
         return
     }
 
-    const password = bcrypt.compare(req.body.password, user.password)
+    const pw = bcrypt.compare(req.body.password, user.password)
 
-    User.findOne({ where: {email, password}})
+    User.findOne({ where: {email, password:pw}})
         .then(user => {
             if(user) {
                 const token = jwt.sign({ id: user.id}, 'tautochrone', {expiresIn: 3600})
