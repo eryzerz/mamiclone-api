@@ -102,8 +102,8 @@ exports.delete = (req, res) => {
                     message: `Dorm with id ${req.params.id} is not found!`
                 })
             }
-            return dorm.destroy()
-                .then((dorm) => res.status(204).send({
+            dorm.destroy()
+                .then(() => res.status(204).send({
                     message: 'User deleted!'
                 }))
                 .catch(error => res.status(400).send(error))
