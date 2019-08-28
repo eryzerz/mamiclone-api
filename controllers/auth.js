@@ -8,7 +8,7 @@ const Op = Sequelize.Op
 exports.login = (req, res) => {
     const schema = {
         email: Joi.string().email().required(),
-        password: Joi.string().regex(/^(?=.*[0-9]+.*)(?=.*[A-Z]+.*)(?=.*[!@#\$%\^\&\*\)\(\+\=\.\_\-]+.*)[0-9a-zA-Z!@#\$%\^\&*\)\(\+\=\.\_\-]{8,}$/).required(), 
+        password: Joi.string().regex(/^(?=.*[0-9]+.*)[0-9a-zA-Z!@#\$%\^\&*\)\(\+\=\.\_\-]{8,}$/).required(), 
     }
     
     const { email, password } = req.body
@@ -42,7 +42,7 @@ exports.signup = (req, res) => {
     const schema = {
         username: Joi.string().min(3).required(),
         email: Joi.string().email(),
-        password: Joi.string().regex(/^(?=.*[0-9]+.*)(?=.*[A-Z]+.*)(?=.*[!@#\$%\^\&\*\)\(\+\=\.\_\-]+.*)[0-9a-zA-Z!@#\$%\^\&*\)\(\+\=\.\_\-]{8,}$/).required(),
+        password: Joi.string().regex(/^(?=.*[0-9]+.*)[0-9a-zA-Z!@#\$%\^\&*\)\(\+\=\.\_\-]{8,}$/).required(),
     }
 
     const { email, username, password } = req.body
