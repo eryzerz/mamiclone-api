@@ -1,7 +1,6 @@
 const jwt = require('jsonwebtoken')
 const Joi = require('@hapi/joi')
 const Sequelize = require('sequelize')
-const { check, validationResult } = require('express-validator')
 
 const User = require('../models').user
 const Op = Sequelize.Op
@@ -13,7 +12,7 @@ exports.login = (req, res) => {
     }
     
     const { email, password } = req.body
-    const result = schema.validate({email, password})
+    const result = Joi.validate(req.body, schema)
 
     if(result.error) {
         res.status(400).send(result.error.details[0].message)
