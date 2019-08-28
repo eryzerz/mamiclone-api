@@ -19,6 +19,9 @@ exports.login = (req, res) => {
         res.status(400).send(result.error.details[0].message)
         return
     }
+
+    const password = bcrypt.compare(req.body.password, user.password)
+
     User.findOne({ where: {email, password}})
         .then(user => {
             if(user) {
