@@ -12,7 +12,7 @@ exports.login = (req, res) => {
         password: Joi.string().regex(/^(?=.*[0-9]+.*)[0-9a-zA-Z!@#\$%\^\&*\)\(\+\=\.\_\-]{8,}$/).required(), 
     }
     
-    const { email, password } = req.body
+    const email = req.body
     const result = Joi.validate(req.body, schema)
 
     if(result.error) {
