@@ -65,13 +65,13 @@ exports.signup = (req, res) => {
     const { email, username } = req.body
 
     User.findOne({ where: {[Op.or]:[{email}, {username}]}})
-        .then(user => {
+        .then( async user => {
             if(user) {
                 res.status(400).send({
                     message: 'Email/Username already exist'
                 })
             } else {
-                const hashed = hashedPassword()
+                const hashed = await hashedPassword()
                 console.log(hashed)
 
                 User.create(Object.assign(req.body, {password: hashedPassword()}))
