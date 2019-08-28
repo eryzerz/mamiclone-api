@@ -13,7 +13,6 @@ exports.login = (req, res) => {
     
     const { email, password } = req.body
     const result = Joi.validate(req.body, schema)
-    console.log(result.error)
 
     if(result.error) {
         res.status(400).send(result.error.details[0].message)
@@ -47,7 +46,7 @@ exports.signup = (req, res) => {
     }
 
     const { email, username, password } = req.body
-    const result = schema.validate({email, username, password})
+    const result = Joi.validate(req.body, schema)
 
     if(result.error) {
         res.status(400).send(result.error.details[0].message)
