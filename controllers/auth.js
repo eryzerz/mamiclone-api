@@ -49,11 +49,13 @@ exports.signup = (req, res) => {
 
     const result = Joi.validate(req.body, schema)
 
+    const { email, username } = req.body
+
     if(result.error) {
         res.status(400).send(result.error.details[0].message)
         return
     }
-
+    
     User.findOne({ where: {[Op.or]:[{email}, {username}]}})
         .then(user => {
             if(user) {
