@@ -1,4 +1,5 @@
 const Sequelize = require('sequelize')
+const Joi = require('@hapi/joi')
 
 const User = require('../models').user
 const Dorm = require('../models').dorm
@@ -44,7 +45,30 @@ exports.listByCity = (req, res) => {
 }
 
 exports.create = (req, res) => {
+    const schema = {
+        type: Joi.string().required(),
+        city: Joi.string().required(),
+        village: Joi.string().required(),
+        region: Joi.string().required(),
+        province: Joi.string().required(),
+        name: Joi.string().required(),
+        cost: Joi.string().required(),
+        room: Joi.number().integer().required(),
+        latitude: Joi.string().required(),
+        longitude: Joi.string().required(),
+        photoURL: Joi.string().uri().required(),
+        area: Joi.string().required(),
+        facility: Joi.string().required(), 
+    }
+
     Object.assign(req.body, {createdBy: req.user.id})
+
+    const result = Joi.validate(req.body, schema)
+    if(result.error) {
+        res.status(400).send(result.error.details[0].message)
+        return
+    }
+
     Dorm.create(req.body)
         .then(dorm => res.status(201).send(dorm))
         .catch(error => res.status(400).send(error))
