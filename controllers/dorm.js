@@ -52,7 +52,7 @@ exports.create = (req, res) => {
         region: Joi.string().required(),
         province: Joi.string().required(),
         name: Joi.string().required(),
-        cost: Joi.string().required(),
+        cost: Joi.number().integer().required(),
         room: Joi.number().integer().required(),
         latitude: Joi.string().required(),
         longitude: Joi.string().required(),
