@@ -8,3 +8,5 @@ Mamiclone REST API comes with a set of 4 common resources: <br/>
 [/users](https://mamiclone-api.herokuapp.com/api/v1/users) <br/>
 [/dorms](https://mamiclone-api.herokuapp.com/api/v1/dorms) <br/>
 
+## License
+[MIT](https://choosealicense.com/licenses/mit/)
