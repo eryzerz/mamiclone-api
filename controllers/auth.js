@@ -58,7 +58,7 @@ exports.signup = (req, res) => {
     const salt = bcrypt.genSalt(10)
     const hashPw = bcrypt.hash(req.body.password, salt)
 
-    Object.assign(req.body, {password: hashPw})
+    req.body.password = hashPw
 
     const { email, username } = req.body
 
