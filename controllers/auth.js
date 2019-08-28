@@ -48,17 +48,19 @@ exports.signup = (req, res) => {
     }
 
     const result = Joi.validate(req.body, schema)
-    const salt = bcrypt.gentSalt(10)
-    const hashPw = bcrypt.hash(req.body.password, salt)
-
-    Object.assign(req.body, {password: hashPw})
-
-    const { email, username } = req.body
+    
 
     if(result.error) {
         res.status(400).send(result.error.details[0].message)
         return
     }
+
+    const salt = bcrypt.genSalt(10)
+    const hashPw = bcrypt.hash(req.body.password, salt)
+
+    Object.assign(req.body, {password: hashPw})
+
+    const { email, username } = req.body
 
     User.findOne({ where: {[Op.or]:[{email}, {username}]}})
         .then(user => {
