@@ -12,7 +12,7 @@ exports.login = (req, res) => {
         password: Joi.string().regex(/^(?=.*[0-9]+.*)[0-9a-zA-Z!@#\$%\^\&*\)\(\+\=\.\_\-]{8,}$/).required(), 
     }
     
-    const email = req.body
+    const { email, password } = req.body
     const result = Joi.validate(req.body, schema)
 
     if(result.error) {
@@ -20,13 +20,14 @@ exports.login = (req, res) => {
         return
     }
 
-    console.log(req.user)
-    const pw = bcrypt.compare(req.body.password, req.user.password)
-
-    User.findOne({ where: {email, password:pw}})
+    User.findOne({ where: {email, password}})
         .then(user => {
             if(user) {
                 const token = jwt.sign({ id: user.id}, 'tautochrone', {expiresIn: 3600})
+                const validPass = await bcrypt.compare(req.body.password, user.password)
+                if(!validPass) return res.status(400).send({
+                    message: 'Invalid Password'
+                }) 
                 res.send({
                     error: false,
                     message: 'You are logged in!',
