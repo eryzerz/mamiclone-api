@@ -60,10 +60,11 @@ exports.create = (req, res) => {
         area: Joi.string().required(),
         facility: Joi.string().required(), 
     }
+    
+    const result = Joi.validate(req.body, schema)
 
     Object.assign(req.body, {createdBy: req.user.id})
 
-    const result = Joi.validate(req.body, schema)
     if(result.error) {
         res.status(400).send(result.error.details[0].message)
         return
