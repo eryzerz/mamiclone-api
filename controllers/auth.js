@@ -13,6 +13,7 @@ exports.login = (req, res) => {
     
     const { email, password } = req.body
     const result = Joi.validate(req.body, schema)
+    console.log(result.error)
 
     if(result.error) {
         res.status(400).send(result.error.details[0].message)
