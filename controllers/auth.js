@@ -20,6 +20,7 @@ exports.login = (req, res) => {
         return
     }
 
+    console.log(req.user)
     const pw = bcrypt.compare(req.body.password, req.user.password)
 
     User.findOne({ where: {email, password:pw}})
