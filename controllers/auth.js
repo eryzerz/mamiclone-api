@@ -58,7 +58,7 @@ exports.signup = (req, res) => {
     let hashedPassword = async () => {
         const salt = await bcrypt.genSalt(10)
         const hashPw = await bcrypt.hash(req.body.password, salt)
-        return hashPw;
+        console.log(hashPw);
     }
 
 
