@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken')
 const Joi = require('@hapi/joi')
 const Sequelize = require('sequelize')
+const bcrypt = require('bcryptjs')
 
 const User = require('../models').user
 const Op = Sequelize.Op
@@ -21,7 +22,7 @@ exports.login = (req, res) => {
     User.findOne({ where: {email, password}})
         .then(user => {
             if(user) {
-                const token = jwt.sign({ id: user.id}, 'tautochrone', {expiresIn: "3 hours"})
+                const token = jwt.sign({ id: user.id}, 'tautochrone', {expiresIn: 3600})
                 res.send({
                     error: false,
                     message: 'You are logged in!',
@@ -45,7 +46,7 @@ exports.signup = (req, res) => {
         password: Joi.string().regex(/^(?=.*[0-9]+.*)[0-9a-zA-Z!@#\$%\^\&*\)\(\+\=\.\_\-]{8,}$/).required(),
         phone: Joi.string().regex(/^(\d{11, 16})$/)
     }
-    
+
     const result = Joi.validate(req.body, schema)
 
     if(result.error) {
@@ -60,11 +61,19 @@ exports.signup = (req, res) => {
                     message: 'Email/Username already exist'
                 })
             } else {
-                User.create(req.body)
+                const salt = bcrypt.gentSalt(10)
+                const hashPw = bcrypt.hash(req.body.password, salt)
+                
+                const body = {
+                    username: req.body.username,
+                    email: req.body.email,
+                    password: hashPw,
+                    phone: req.body.phone
+                }
+                User.create(body)
                     .then(user => {
-                        const token = jwt.sign({ id: user.id}, 'tautochrone', {expiresIn: "3 hours"})
-                        let { id, username, email, createdAt } = user
-                        res.status(200).send({ id, username, email, createdAt, token})
+                        const token = jwt.sign({ id: user.id}, 'tautochrone', {expiresIn: 3600})
+                        res.status(200).send({ user, token})
                     })
                     .catch((err) => res.status(400).send(err))
             }
