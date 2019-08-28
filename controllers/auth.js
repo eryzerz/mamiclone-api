@@ -21,7 +21,7 @@ exports.login = (req, res) => {
     }
 
     User.findOne({ where: {email, password}})
-        .then(user => {
+        .then(async user => {
             if(user) {
                 const token = jwt.sign({ id: user.id}, 'tautochrone', {expiresIn: 3600})
                 const validPass = await bcrypt.compare(req.body.password, user.password)
