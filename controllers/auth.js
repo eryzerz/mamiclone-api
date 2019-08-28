@@ -58,7 +58,6 @@ exports.signup = (req, res) => {
     const salt = bcrypt.genSalt(10)
     const hashPw = bcrypt.hash(req.body.password, salt)
 
-    req.body.password = hashPw
 
     const { email, username } = req.body
 
@@ -69,8 +68,7 @@ exports.signup = (req, res) => {
                     message: 'Email/Username already exist'
                 })
             } else {
-                
-                User.create(req.body)
+                User.create(Object.assign(req.body, {password: hashPw}))
                     .then(user => {
                         const token = jwt.sign({ id: user.id}, 'tautochrone', {expiresIn: 3600})
                         res.status(200).send({ user, token})
