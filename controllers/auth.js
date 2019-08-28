@@ -44,7 +44,7 @@ exports.signup = (req, res) => {
         username: Joi.string().min(3).required(),
         email: Joi.string().email(),
         password: Joi.string().regex(/^(?=.*[0-9]+.*)[0-9a-zA-Z!@#\$%\^\&*\)\(\+\=\.\_\-]{8,}$/).required(),
-        phone: Joi.string().regex(/^[0-9]{11, 16}$/)
+        phone: Joi.string().regex(/^[0-9]{10,}$/)
     }
 
     const result = Joi.validate(req.body, schema)
