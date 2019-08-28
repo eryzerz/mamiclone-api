@@ -28,7 +28,7 @@ exports.login = (req, res) => {
                 if(!validPass) return res.status(400).send({
                     message: 'Invalid Password'
                 }) 
-                res.send({
+                return res.send({
                     error: false,
                     message: 'You are logged in!',
                     token
