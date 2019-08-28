@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/eryzerz/mamiclone-api#readme",
   "dependencies": {
+    "@hapi/joi": "^15.1.1",
     "body-parser": "^1.19.0",
     "express": "^4.17.1",
     "express-group-routes": "^1.1.0",
